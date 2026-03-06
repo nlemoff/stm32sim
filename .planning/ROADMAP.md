@@ -77,4 +77,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Compilation and Simulation Engine | 3/3 | Complete | 2026-03-06 |
 | 2. Frontend and GPIO End-to-End | 4/5 | Gap closure | - |
-| 3. UART and SPI/I2C Peripherals | 0/3 | Planning complete | - |
+| 3. UART and SPI/I2C Peripherals | 1/3 | In Progress|  |
