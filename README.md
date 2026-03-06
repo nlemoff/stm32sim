@@ -4,6 +4,12 @@ A web-based simulator for STM32F4 firmware. Write C code in a browser editor, co
 
 ![Knight Rider LED demo](screenshots/06-knight-rider.png)
 
+### More screenshots
+
+| UART serial console | SPI bus log |
+|---|---|
+| ![UART Hello](screenshots/04-uart-hello-working.png) | ![SPI Loopback](screenshots/07-spi-loopback.png) |
+
 ## Features
 
 - **Code editor** — CodeMirror with C/C++ syntax highlighting and the One Dark theme
