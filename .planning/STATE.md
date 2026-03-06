@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-03-06T05:53:10Z"
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-03-06T05:58:21.565Z"
 last_activity: 2026-03-06 — Completed Plan 02-02 (Frontend Scaffold)
 progress:
   total_phases: 3
@@ -51,6 +51,7 @@ Progress: [███████---] 71%
 - Trend: stable
 
 *Updated after each plan completion*
+| Phase 02 P01 | 14min | 2 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,9 @@ Recent decisions affecting current work:
 - [02-02]: basicSetup from codemirror meta-package for complete editor experience (~200KB)
 - [02-02]: Static files served from dist/ after API routes, same port as backend (no CORS)
 - [02-02]: Bun HTML bundler for zero-config frontend build (no Vite/Webpack)
+- [Phase 02-01]: Use Bun FileSink API (write+flush) not WritableStream getWriter for subprocess stdin
+- [Phase 02-01]: Minimum 1ms delay floor in HAL_Delay prevents CPU spinning at very high speed multipliers
+- [Phase 02-01]: sim_check_stdin called in both HAL_GPIO_ReadPin and HAL_Delay for comprehensive input coverage
 
 ### Pending Todos
 
@@ -90,6 +94,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-06T05:53:10Z
-Stopped at: Completed 02-02-PLAN.md
-Resume file: .planning/phases/02-frontend-and-gpio-end-to-end/02-02-SUMMARY.md
+Last session: 2026-03-06T05:58:21.563Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None

@@ -19,10 +19,10 @@
 
 ### GPIO
 
-- [ ] **GPIO-01**: Simulator supports GPIO peripheral — set pins high/low, read input state
+- [x] **GPIO-01**: Simulator supports GPIO peripheral — set pins high/low, read input state
 - [ ] **GPIO-02**: Virtual LEDs light up in the UI when corresponding GPIO pins are set high
 - [ ] **GPIO-03**: Pin state table shows all GPIO pins with current direction and state (high/low)
-- [ ] **GPIO-04**: User can click virtual buttons in the UI to send input signals to the running firmware
+- [x] **GPIO-04**: User can click virtual buttons in the UI to send input signals to the running firmware
 
 ### UART
 
@@ -84,10 +84,10 @@
 | EDIT-01 | Phase 2 | Complete (02-02) |
 | EDIT-02 | Phase 2 | Complete (02-02) |
 | EDIT-03 | Phase 2 | Complete (02-02) |
-| GPIO-01 | Phase 2 | Pending |
+| GPIO-01 | Phase 2 | Complete |
 | GPIO-02 | Phase 2 | Pending |
 | GPIO-03 | Phase 2 | Pending |
-| GPIO-04 | Phase 2 | Pending |
+| GPIO-04 | Phase 2 | Complete |
 | UART-01 | Phase 3 | Pending |
 | UART-02 | Phase 3 | Pending |
 | UART-03 | Phase 3 | Pending |
