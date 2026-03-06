@@ -78,30 +78,30 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COMP-01 | — | Pending |
-| COMP-02 | — | Pending |
-| COMP-03 | — | Pending |
-| EDIT-01 | — | Pending |
-| EDIT-02 | — | Pending |
-| EDIT-03 | — | Pending |
-| GPIO-01 | — | Pending |
-| GPIO-02 | — | Pending |
-| GPIO-03 | — | Pending |
-| GPIO-04 | — | Pending |
-| UART-01 | — | Pending |
-| UART-02 | — | Pending |
-| UART-03 | — | Pending |
-| SPII-01 | — | Pending |
-| SPII-02 | — | Pending |
-| CTRL-01 | — | Pending |
-| CTRL-02 | — | Pending |
-| CTRL-03 | — | Pending |
+| COMP-01 | Phase 1 | Pending |
+| COMP-02 | Phase 1 | Pending |
+| COMP-03 | Phase 1 | Pending |
+| EDIT-01 | Phase 2 | Pending |
+| EDIT-02 | Phase 2 | Pending |
+| EDIT-03 | Phase 2 | Pending |
+| GPIO-01 | Phase 2 | Pending |
+| GPIO-02 | Phase 2 | Pending |
+| GPIO-03 | Phase 2 | Pending |
+| GPIO-04 | Phase 2 | Pending |
+| UART-01 | Phase 3 | Pending |
+| UART-02 | Phase 3 | Pending |
+| UART-03 | Phase 3 | Pending |
+| SPII-01 | Phase 3 | Pending |
+| SPII-02 | Phase 3 | Pending |
+| CTRL-01 | Phase 2 | Pending |
+| CTRL-02 | Phase 2 | Pending |
+| CTRL-03 | Phase 2 | Pending |
 
 **Coverage:**
 - v1 requirements: 18 total
-- Mapped to phases: 0
-- Unmapped: 18
+- Mapped to phases: 18
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-05*
-*Last updated: 2026-03-05 after initial definition*
+*Last updated: 2026-03-05 after roadmap creation*
