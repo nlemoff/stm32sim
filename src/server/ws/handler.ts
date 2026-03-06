@@ -12,6 +12,7 @@ import {
   stopSimulation,
   getSimulation,
   sendGpioInput,
+  sendUartInput,
 } from "../runner/process-manager";
 
 /**
@@ -88,6 +89,12 @@ export const wsHandlers = {
 
         // Forward to subprocess stdin
         sendGpioInput(ws.data.simulationId, port, pin, state);
+      } else if (msg.type === "uart_rx") {
+        // Validate data: must be a non-empty string
+        if (typeof msg.data !== "string" || msg.data.length === 0) return;
+
+        // Forward UART input to subprocess stdin
+        sendUartInput(ws.data.simulationId, msg.data);
       }
     } catch {
       // Ignore invalid messages

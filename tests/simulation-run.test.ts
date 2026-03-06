@@ -179,18 +179,20 @@ describe("POST /api/stop", () => {
 });
 
 describe("GET /api/samples", () => {
-  it("returns array with blink, knight-rider, and button-led", async () => {
+  it("returns array with all sample firmware programs", async () => {
     const res = await fetch(`${BASE}/api/samples`);
 
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(Array.isArray(data)).toBe(true);
-    expect(data.length).toBe(3);
+    expect(data.length).toBe(5);
 
     const names = data.map((s: any) => s.name);
     expect(names).toContain("blink");
     expect(names).toContain("knight-rider");
     expect(names).toContain("button-led");
+    expect(names).toContain("uart-hello");
+    expect(names).toContain("spi-loopback");
 
     // Each sample should have title and description
     for (const sample of data) {

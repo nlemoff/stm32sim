@@ -157,6 +157,33 @@ export function stopAllSimulations(): void {
 }
 
 /**
+ * Send UART input data to a running simulation's stdin.
+ *
+ * Writes a JSON line with type "uart_rx" to the subprocess stdin pipe,
+ * which the C runtime reads via sim_check_stdin() and pushes into the
+ * UART RX ring buffer for HAL_UART_Receive() to consume.
+ *
+ * @param simId - Simulation ID
+ * @param data - String data to send as UART input
+ */
+export function sendUartInput(simId: string, data: string): void {
+  const sim = simulationStore.get(simId);
+  if (!sim) return;
+
+  try {
+    const json = JSON.stringify({ type: "uart_rx", data }) + "\n";
+    // Bun's subprocess stdin is a FileSink with direct write/flush methods
+    const stdin = sim.process.stdin as any;
+    if (stdin) {
+      stdin.write(json);
+      stdin.flush();
+    }
+  } catch {
+    // Process may have already exited -- ignore write errors
+  }
+}
+
+/**
  * Send a GPIO input command to a running simulation's stdin.
  *
  * Writes a JSON line to the subprocess stdin pipe, which the C runtime
