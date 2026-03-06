@@ -61,11 +61,12 @@ Plans:
   1. User runs a "UART hello world" sample and sees serial output appear in an xterm.js terminal console embedded in the UI
   2. User types into the UART console and the running firmware receives the input (bidirectional serial communication works end-to-end)
   3. User runs an SPI or I2C loopback sample and sees transmitted data echoed back, with a timestamped bus transaction log showing all SPI/I2C activity
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
+- [ ] 03-01-PLAN.md — Backend pipeline: wire UART/SPI/I2C HAL stubs to event system, add UART RX input channel, sample firmware
+- [ ] 03-02-PLAN.md — Frontend: xterm.js UART terminal console, SPI/I2C bus log panel, event wiring and layout
+- [ ] 03-03-PLAN.md — Integration tests for UART and SPI/I2C events, human verification checkpoint
 
 ## Progress
 
@@ -76,4 +77,4 @@ Phases execute in numeric order: 1 → 2 → 3
 |-------|----------------|--------|-----------|
 | 1. Compilation and Simulation Engine | 3/3 | Complete | 2026-03-06 |
 | 2. Frontend and GPIO End-to-End | 4/5 | Gap closure | - |
-| 3. UART and SPI/I2C Peripherals | 0/0 | Not started | - |
+| 3. UART and SPI/I2C Peripherals | 0/3 | Planning complete | - |
