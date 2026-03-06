@@ -30,7 +30,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Bootstrap project, mock HAL stub library, and sample firmware programs
+- [x] 01-01-PLAN.md — Bootstrap project, mock HAL stub library, and sample firmware programs
 - [ ] 01-02-PLAN.md — Compiler module with error parsing and execution runner with subprocess management
 - [ ] 01-03-PLAN.md — HTTP server with REST API endpoints and WebSocket event streaming
 
@@ -71,6 +71,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Compilation and Simulation Engine | 0/3 | Planning complete | - |
+| 1. Compilation and Simulation Engine | 1/3 | Executing | - |
 | 2. Frontend and GPIO End-to-End | 0/0 | Not started | - |
 | 3. UART and SPI/I2C Peripherals | 0/0 | Not started | - |

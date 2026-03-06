@@ -7,7 +7,7 @@
 
 ### Compilation
 
-- [ ] **COMP-01**: User can compile STM32 C code server-side using native gcc with mock HAL stubs
+- [x] **COMP-01**: User can compile STM32 C code server-side using native gcc with mock HAL stubs
 - [ ] **COMP-02**: User can run compiled firmware and see execution results streamed to the browser in real-time
 - [ ] **COMP-03**: User sees clear, readable compilation errors when code fails to compile
 
@@ -78,7 +78,7 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| COMP-01 | Phase 1 | Pending |
+| COMP-01 | Phase 1 | Complete (01-01) |
 | COMP-02 | Phase 1 | Pending |
 | COMP-03 | Phase 1 | Pending |
 | EDIT-01 | Phase 2 | Pending |
