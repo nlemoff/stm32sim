@@ -10,6 +10,8 @@
 #ifndef __SIM_RUNTIME_H
 #define __SIM_RUNTIME_H
 
+#include <stdint.h>
+
 /**
  * Simulation speed multiplier.
  * 1.0 = real time, 2.0 = 2x faster, 0.5 = half speed.
@@ -59,5 +61,32 @@ void sim_check_stdin(void);
  * Emits a sim_exit event.
  */
 void sim_cleanup(void);
+
+/* ---- UART RX Ring Buffer ---- */
+
+/**
+ * @brief Push bytes into the UART RX ring buffer.
+ * Called by sim_process_input when a uart_rx message arrives.
+ * Drops bytes silently if buffer is full.
+ *
+ * @param data  Pointer to bytes to push
+ * @param len   Number of bytes to push
+ */
+void sim_uart_rx_push(const uint8_t *data, int len);
+
+/**
+ * @brief Pop bytes from the UART RX ring buffer.
+ *
+ * @param out        Output buffer to copy bytes into
+ * @param max_bytes  Maximum number of bytes to pop
+ * @return Number of bytes actually popped
+ */
+int sim_uart_rx_pop(uint8_t *out, int max_bytes);
+
+/**
+ * @brief Get number of bytes available in the UART RX ring buffer.
+ * @return Number of bytes available to read
+ */
+int sim_uart_rx_available(void);
 
 #endif /* __SIM_RUNTIME_H */

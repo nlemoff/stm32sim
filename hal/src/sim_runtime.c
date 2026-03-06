@@ -74,55 +74,114 @@ void sim_emit_event(const char *type, const char *data_fmt, ...) {
     printf("}\n");
 }
 
+/* ---- UART RX Ring Buffer ---- */
+static uint8_t uart_rx_buf[256];
+static int uart_rx_head = 0;
+static int uart_rx_tail = 0;
+
+void sim_uart_rx_push(const uint8_t *data, int len) {
+    for (int i = 0; i < len; i++) {
+        int next = (uart_rx_head + 1) % (int)sizeof(uart_rx_buf);
+        if (next == uart_rx_tail) break; /* buffer full -- drop */
+        uart_rx_buf[uart_rx_head] = data[i];
+        uart_rx_head = next;
+    }
+}
+
+int sim_uart_rx_pop(uint8_t *out, int max_bytes) {
+    int count = 0;
+    while (count < max_bytes && uart_rx_tail != uart_rx_head) {
+        out[count++] = uart_rx_buf[uart_rx_tail];
+        uart_rx_tail = (uart_rx_tail + 1) % (int)sizeof(uart_rx_buf);
+    }
+    return count;
+}
+
+int sim_uart_rx_available(void) {
+    int avail = uart_rx_head - uart_rx_tail;
+    if (avail < 0) avail += (int)sizeof(uart_rx_buf);
+    return avail;
+}
+
 /**
  * Process a single JSON input command.
- * Expected format: {"type":"gpio_input","port":"A","pin":0,"state":1}
+ * Expected formats:
+ *   {"type":"gpio_input","port":"A","pin":0,"state":1}
+ *   {"type":"uart_rx","data":"hello"}
  * Uses simple strstr-based parsing (no JSON library needed).
  */
 static void sim_process_input(const char *json) {
-    /* Only handle gpio_input messages */
-    if (!strstr(json, "gpio_input")) return;
+    /* Handle gpio_input messages */
+    if (strstr(json, "gpio_input")) {
+        /* Parse port: look for "port":"X" */
+        const char *port_key = strstr(json, "\"port\"");
+        if (!port_key) return;
+        const char *port_quote = strchr(port_key + 6, '"');
+        if (!port_quote) return;
+        char port_char = port_quote[1];
+        if (port_char < 'A' || port_char > 'E') return;
 
-    /* Parse port: look for "port":"X" */
-    const char *port_key = strstr(json, "\"port\"");
-    if (!port_key) return;
-    const char *port_quote = strchr(port_key + 6, '"');
-    if (!port_quote) return;
-    char port_char = port_quote[1];
-    if (port_char < 'A' || port_char > 'E') return;
+        /* Parse pin: look for "pin": followed by a number */
+        const char *pin_key = strstr(json, "\"pin\"");
+        if (!pin_key) return;
+        const char *pin_colon = strchr(pin_key + 4, ':');
+        if (!pin_colon) return;
+        int pin = atoi(pin_colon + 1);
+        if (pin < 0 || pin > 15) return;
 
-    /* Parse pin: look for "pin": followed by a number */
-    const char *pin_key = strstr(json, "\"pin\"");
-    if (!pin_key) return;
-    const char *pin_colon = strchr(pin_key + 4, ':');
-    if (!pin_colon) return;
-    int pin = atoi(pin_colon + 1);
-    if (pin < 0 || pin > 15) return;
+        /* Parse state: look for "state": followed by 0 or 1 */
+        const char *state_key = strstr(json, "\"state\"");
+        if (!state_key) return;
+        const char *state_colon = strchr(state_key + 7, ':');
+        if (!state_colon) return;
+        int state = atoi(state_colon + 1);
+        if (state != 0 && state != 1) return;
 
-    /* Parse state: look for "state": followed by 0 or 1 */
-    const char *state_key = strstr(json, "\"state\"");
-    if (!state_key) return;
-    const char *state_colon = strchr(state_key + 7, ':');
-    if (!state_colon) return;
-    int state = atoi(state_colon + 1);
-    if (state != 0 && state != 1) return;
+        /* Map port letter to GPIO instance */
+        GPIO_TypeDef *gpio = NULL;
+        switch (port_char) {
+            case 'A': gpio = GPIOA; break;
+            case 'B': gpio = GPIOB; break;
+            case 'C': gpio = GPIOC; break;
+            case 'D': gpio = GPIOD; break;
+            case 'E': gpio = GPIOE; break;
+            default: return;
+        }
 
-    /* Map port letter to GPIO instance */
-    GPIO_TypeDef *gpio = NULL;
-    switch (port_char) {
-        case 'A': gpio = GPIOA; break;
-        case 'B': gpio = GPIOB; break;
-        case 'C': gpio = GPIOC; break;
-        case 'D': gpio = GPIOD; break;
-        case 'E': gpio = GPIOE; break;
-        default: return;
+        /* Update the Input Data Register */
+        if (state) {
+            gpio->IDR |= (1 << pin);
+        } else {
+            gpio->IDR &= ~(1 << pin);
+        }
     }
+    else if (strstr(json, "uart_rx")) {
+        /* Parse the "data" field: a string of characters to push into ring buffer */
+        const char *data_key = strstr(json, "\"data\"");
+        if (!data_key) return;
+        const char *data_quote = strchr(data_key + 6, '"');
+        if (!data_quote) return;
+        data_quote++; /* skip opening quote */
 
-    /* Update the Input Data Register */
-    if (state) {
-        gpio->IDR |= (1 << pin);
-    } else {
-        gpio->IDR &= ~(1 << pin);
+        while (*data_quote && *data_quote != '"') {
+            uint8_t ch;
+            if (*data_quote == '\\' && *(data_quote + 1)) {
+                /* Handle escape sequences */
+                data_quote++;
+                switch (*data_quote) {
+                    case 'n': ch = '\n'; break;
+                    case 'r': ch = '\r'; break;
+                    case 't': ch = '\t'; break;
+                    case '\\': ch = '\\'; break;
+                    case '"': ch = '"'; break;
+                    default: ch = (uint8_t)*data_quote; break;
+                }
+            } else {
+                ch = (uint8_t)*data_quote;
+            }
+            sim_uart_rx_push(&ch, 1);
+            data_quote++;
+        }
     }
 }
 
