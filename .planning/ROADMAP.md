@@ -47,8 +47,8 @@ Plans:
 **Plans**: 4 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Backend GPIO input IPC: stdin reader in C runtime, stdin pipe in process-manager, WebSocket forwarding
-- [ ] 02-02-PLAN.md — Frontend scaffold: CodeMirror editor, file upload, sample loading, API/WebSocket clients, static serving
+- [x] 02-01-PLAN.md — Backend GPIO input IPC: stdin reader in C runtime, stdin pipe in process-manager, WebSocket forwarding
+- [x] 02-02-PLAN.md — Frontend scaffold: CodeMirror editor, file upload, sample loading, API/WebSocket clients, static serving
 - [ ] 02-03-PLAN.md — GPIO visualization (LEDs, pin table, buttons), simulation controls (run/stop/speed/status), error panel, full wiring
 - [ ] 02-04-PLAN.md — Human verification checkpoint: complete browser UI end-to-end testing
 
@@ -74,5 +74,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Compilation and Simulation Engine | 3/3 | Complete | 2026-03-06 |
-| 2. Frontend and GPIO End-to-End | 0/4 | Planned | - |
+| 2. Frontend and GPIO End-to-End | 2/4 | In Progress | - |
 | 3. UART and SPI/I2C Peripherals | 0/0 | Not started | - |
