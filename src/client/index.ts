@@ -114,13 +114,12 @@ const sampleSelect = document.getElementById("sample-select") as HTMLSelectEleme
 async function loadSamples() {
   try {
     const data = await listSamples();
-    if (data.samples && Array.isArray(data.samples)) {
-      for (const sample of data.samples) {
-        const option = document.createElement("option");
-        option.value = sample.name;
-        option.textContent = sample.title || sample.name;
-        sampleSelect.appendChild(option);
-      }
+    const samples = Array.isArray(data) ? data : data.samples ?? [];
+    for (const sample of samples) {
+      const option = document.createElement("option");
+      option.value = sample.name;
+      option.textContent = sample.title || sample.name;
+      sampleSelect.appendChild(option);
     }
   } catch (err) {
     console.warn("Failed to load samples:", err);
@@ -133,8 +132,9 @@ sampleSelect.addEventListener("change", async () => {
   if (!name) return;
   try {
     const sample = await getSample(name);
-    if (sample.code) {
-      setCode(sample.code);
+    const code = sample.code ?? sample.files?.[0]?.content;
+    if (code) {
+      setCode(code);
     }
   } catch (err) {
     console.error("Failed to load sample:", err);

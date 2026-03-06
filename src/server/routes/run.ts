@@ -14,6 +14,7 @@ import {
   getSimulation,
 } from "../runner/process-manager";
 import { cleanupCompilation } from "../compiler/compile";
+import { getClientCount } from "../ws/handler";
 
 /**
  * Handle POST /api/run
@@ -55,14 +56,31 @@ export async function handleRun(
     );
   }
 
+  // Buffer events until a WebSocket client subscribes (race condition fix:
+  // simulation starts emitting before the client connects its WebSocket)
+  let bufferedEvents: string[] = [];
+  let flushed = false;
+
   const simulationId = await startSimulation({
     compilationId,
     binaryPath,
     speed: speed ?? 1.0,
     timeoutMs: timeout ?? 30000,
     onEvent: (event) => {
-      // Publish event to all WebSocket clients subscribed to this simulation
-      server.publish(`sim:${simulationId}`, JSON.stringify(event));
+      const json = JSON.stringify(event);
+      if (!flushed && getClientCount(simulationId) === 0) {
+        bufferedEvents.push(json);
+        return;
+      }
+      // Flush any buffered events first
+      if (!flushed) {
+        flushed = true;
+        for (const buffered of bufferedEvents) {
+          server.publish(`sim:${simulationId}`, buffered);
+        }
+        bufferedEvents = [];
+      }
+      server.publish(`sim:${simulationId}`, json);
     },
     onExit: (exitCode, signal) => {
       // Publish exit event to WebSocket clients
