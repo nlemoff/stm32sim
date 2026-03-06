@@ -91,6 +91,9 @@ void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin) {
 }
 
 GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin) {
+    /* Check for pending stdin input before reading */
+    sim_check_stdin();
+
     int idx = port_index(GPIOx);
     if (idx < 0) return GPIO_PIN_RESET;
 

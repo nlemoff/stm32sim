@@ -47,8 +47,15 @@ void HAL_Delay(uint32_t Delay) {
         "{\"requested_ms\":%u,\"actual_ms\":%u}",
         Delay, actual_ms);
 
-    /* usleep takes microseconds */
-    usleep(actual_ms * 1000);
+    /* Sleep in 10ms increments, checking stdin each iteration
+       so that GPIO input is processed even during long delays */
+    uint32_t remaining_ms = actual_ms;
+    while (remaining_ms > 0) {
+        uint32_t chunk = remaining_ms > 10 ? 10 : remaining_ms;
+        usleep(chunk * 1000);
+        remaining_ms -= chunk;
+        sim_check_stdin();
+    }
 }
 
 void SystemClock_Config(void) {

@@ -40,6 +40,21 @@ void sim_init(void);
 void sim_emit_event(const char *type, const char *data_fmt, ...);
 
 /**
+ * @brief Check stdin for GPIO input commands (non-blocking).
+ *
+ * Uses poll() with 0ms timeout to check if stdin has data.
+ * Reads and processes complete newline-delimited JSON lines.
+ * Each line should be: {"type":"gpio_input","port":"A","pin":0,"state":1}
+ *
+ * Updates the appropriate GPIOx->IDR register so that
+ * HAL_GPIO_ReadPin() returns the new value immediately.
+ *
+ * Called from HAL_GPIO_ReadPin() and HAL_Delay() to ensure
+ * input is never missed.
+ */
+void sim_check_stdin(void);
+
+/**
  * @brief Clean up the simulation runtime.
  * Emits a sim_exit event.
  */
