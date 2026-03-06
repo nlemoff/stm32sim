@@ -1,0 +1,279 @@
+/* STM32 Virtual Test Bench - Global Styles */
+
+/* Custom properties - dark theme */
+:root {
+  --bg: #1e1e1e;
+  --panel-bg: #252526;
+  --border: #3c3c3c;
+  --text: #d4d4d4;
+  --accent: #007acc;
+  --led-on: #00ff00;
+  --led-off: #333;
+  --error: #f44;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+}
+
+/* Toolbar */
+header.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--panel-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Workspace layout */
+main.workspace {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Editor panel */
+.editor-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+#editor-container {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Error panel */
+#error-panel {
+  max-height: 150px;
+  overflow-y: auto;
+  font-family: "Cascadia Code", "Fira Code", monospace;
+  font-size: 13px;
+  color: var(--error);
+  padding: 8px;
+  display: none;
+  background: var(--panel-bg);
+  border-top: 1px solid var(--border);
+}
+
+#error-panel.visible {
+  display: block;
+}
+
+/* Viz panel */
+.viz-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  overflow-y: auto;
+  border-left: 1px solid var(--border);
+  background: var(--panel-bg);
+}
+
+/* Section headers */
+.viz-panel h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+}
+
+/* Buttons */
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+#btn-stop {
+  background: #c22;
+}
+
+/* Select / Input */
+select,
+input[type="text"] {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+/* File upload */
+.file-upload-label {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.file-upload-label:hover {
+  background: var(--border);
+}
+
+.file-upload-label input[type="file"] {
+  display: none;
+}
+
+/* LED styles */
+.led {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 4px;
+  transition: background-color 0.1s, box-shadow 0.1s;
+}
+
+.led-off {
+  background-color: var(--led-off);
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.led-on {
+  background-color: var(--led-on);
+  box-shadow: 0 0 8px var(--led-on), 0 0 16px rgba(0, 255, 0, 0.3);
+}
+
+/* Port-colored LED variants */
+.led[data-port="B"].led-on {
+  background-color: #ff4444;
+  box-shadow: 0 0 8px #ff4444, 0 0 16px rgba(255, 68, 68, 0.3);
+}
+
+.led[data-port="C"].led-on {
+  background-color: #4488ff;
+  box-shadow: 0 0 8px #4488ff, 0 0 16px rgba(68, 136, 255, 0.3);
+}
+
+.led-label {
+  font-size: 10px;
+  text-align: center;
+  color: #888;
+}
+
+/* Pin state table */
+#pin-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+#pin-table th,
+#pin-table td {
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+#pin-table th {
+  color: #888;
+  font-weight: 600;
+}
+
+.pin-high {
+  color: var(--led-on);
+}
+
+.pin-low {
+  color: #666;
+}
+
+/* Virtual buttons */
+.vbtn {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: #555;
+  border: 2px solid #777;
+  cursor: pointer;
+  margin: 4px;
+  font-size: 10px;
+  color: var(--text);
+  text-align: center;
+  line-height: 36px;
+  user-select: none;
+}
+
+.vbtn:active {
+  background: #444;
+  border-color: var(--accent);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Status badge */
+#status-badge {
+  padding: 3px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-left: auto;
+}
+
+.status-idle {
+  background: #555;
+  color: #aaa;
+}
+
+.status-compiling {
+  background: #8b6914;
+  color: #ffd700;
+}
+
+.status-running {
+  background: #146b14;
+  color: var(--led-on);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.status-stopped {
+  background: #555;
+  color: #aaa;
+}
+
+.status-error {
+  background: #6b1414;
+  color: var(--error);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}

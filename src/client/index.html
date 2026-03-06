@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STM32 Virtual Test Bench</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="toolbar">
+    <select id="sample-select">
+      <option value="">-- Load Sample --</option>
+    </select>
+
+    <label class="file-upload-label">
+      Upload .c
+      <input type="file" id="file-upload" accept=".c,.h" />
+    </label>
+
+    <button id="btn-run" disabled>Run</button>
+    <button id="btn-stop" disabled>Stop</button>
+
+    <select id="speed-select">
+      <option value="0.25">0.25x</option>
+      <option value="0.5">0.5x</option>
+      <option value="1" selected>1x</option>
+      <option value="2">2x</option>
+      <option value="4">4x</option>
+    </select>
+
+    <span id="status-badge" class="status-idle">Idle</span>
+  </header>
+
+  <main class="workspace">
+    <section class="editor-panel">
+      <div id="editor-container"></div>
+      <div id="error-panel"></div>
+    </section>
+
+    <aside class="viz-panel">
+      <div id="led-panel">
+        <h3>LEDs</h3>
+      </div>
+      <div id="pin-table">
+        <h3>Pin State</h3>
+      </div>
+      <div id="button-panel">
+        <h3>Virtual Buttons</h3>
+      </div>
+    </aside>
+  </main>
+
+  <script type="module" src="index.ts"></script>
+</body>
+</html>

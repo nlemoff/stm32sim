@@ -3,10 +3,16 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "bun run src/server/index.ts",
+    "build:client": "bun build src/client/index.html --outdir=dist --minify",
+    "dev": "bun run build:client && bun run src/server/index.ts",
     "test": "bun test"
   },
   "devDependencies": {
     "@types/bun": "^1.3.10"
+  },
+  "dependencies": {
+    "@codemirror/lang-cpp": "^6.0.3",
+    "@codemirror/theme-one-dark": "^6.1.3",
+    "codemirror": "^6.0.2"
   }
 }
