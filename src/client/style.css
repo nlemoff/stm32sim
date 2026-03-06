@@ -44,12 +44,15 @@ header.toolbar {
 main.workspace {
   display: grid;
   grid-template-columns: 1fr 320px;
+  grid-template-rows: 1fr 200px;
   height: 100%;
   overflow: hidden;
 }
 
 /* Editor panel */
 .editor-panel {
+  grid-column: 1;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -79,6 +82,8 @@ main.workspace {
 
 /* Viz panel */
 .viz-panel {
+  grid-column: 2;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -285,4 +290,80 @@ input[type="text"] {
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.7; }
+}
+
+/* Bottom panels (UART terminal + bus log) */
+.bottom-panels {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  border-top: 1px solid var(--border);
+  background: var(--panel-bg);
+}
+
+/* UART terminal panel */
+.uart-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 8px;
+}
+
+.uart-panel h3 {
+  margin: 0 0 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+}
+
+/* Bus log panel */
+.bus-log-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 8px;
+  border-left: 1px solid var(--border);
+}
+
+.bus-log-panel h3 {
+  margin: 0 0 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #888;
+}
+
+.bus-log-scroll {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.bus-log-panel table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-family: "Cascadia Code", "Fira Code", monospace;
+}
+
+.bus-log-panel th,
+.bus-log-panel td {
+  padding: 2px 6px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.bus-log-panel th {
+  color: #888;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  background: var(--panel-bg);
+}
+
+.bus-log-panel .bus-data {
+  font-family: "Cascadia Code", "Fira Code", monospace;
+  color: #4ec9b0;
 }

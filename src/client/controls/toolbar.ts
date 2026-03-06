@@ -11,6 +11,8 @@ import { showErrors, clearErrors } from "./error-panel";
 import { clearLeds } from "../gpio/led-panel";
 import { clearPinTable } from "../gpio/pin-table";
 import { clearButtons } from "../gpio/button-panel";
+import { clearTerminal } from "../uart/uart-terminal";
+import { clearBusLog } from "../bus/bus-log";
 import type { GpioState } from "../gpio/gpio-state";
 
 export interface ToolbarDeps {
@@ -81,6 +83,8 @@ export function initToolbar(deps: ToolbarDeps): void {
     clearLeds();
     clearPinTable();
     clearButtons();
+    clearTerminal();
+    clearBusLog();
     gpioState.reset();
 
     // Disable Run, enable Stop

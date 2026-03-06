@@ -77,6 +77,15 @@ export class SimConnection {
   }
 
   /**
+   * Send UART input data to the running simulation.
+   */
+  sendUartInput(data: string): void {
+    if (this.ws?.readyState === WebSocket.OPEN) {
+      this.ws.send(JSON.stringify({ type: "uart_rx", data }));
+    }
+  }
+
+  /**
    * Register a handler called when the WebSocket connection closes.
    */
   onClose(handler: CloseHandler): void {

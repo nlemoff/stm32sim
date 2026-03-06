@@ -15,6 +15,8 @@ import { initPinTable, updatePinTable, clearPinTable } from "./gpio/pin-table";
 import { initButtonPanel, addButton, clearButtons } from "./gpio/button-panel";
 import { initToolbar } from "./controls/toolbar";
 import { initErrorPanel } from "./controls/error-panel";
+import { initUartTerminal, writeToTerminal } from "./uart/uart-terminal";
+import { initBusLog, appendBusEntry } from "./bus/bus-log";
 
 // --- Initialize editor ---
 const editorContainer = document.getElementById("editor-container")!;
@@ -35,6 +37,15 @@ initButtonPanel(
   document.getElementById("button-panel")!,
   (port, pin, state) => conn.sendGpioInput(port, pin, state)
 );
+
+// --- Initialize UART terminal ---
+initUartTerminal(
+  document.getElementById("uart-terminal")!,
+  (data: string) => conn.sendUartInput(data)
+);
+
+// --- Initialize bus log ---
+initBusLog(document.getElementById("bus-log")!);
 
 // --- Initialize error panel ---
 initErrorPanel(document.getElementById("error-panel")!);
@@ -74,6 +85,22 @@ conn.on("gpio_write", (event) => {
   gpioState.handleGpioWrite(data);
   updateLed(data.port, data.pin, data.state);
   updatePinTable(gpioState.getAllPins());
+});
+
+// uart_tx: write firmware UART output to the terminal
+conn.on("uart_tx", (event) => {
+  const data = event.data as { data: string; size: number };
+  writeToTerminal(data.data);
+});
+
+// spi_transfer: append to bus log
+conn.on("spi_transfer", (event) => {
+  appendBusEntry("SPI", event.timestamp_ms, event.data);
+});
+
+// i2c_transfer: append to bus log
+conn.on("i2c_transfer", (event) => {
+  appendBusEntry("I2C", event.timestamp_ms, event.data);
 });
 
 // sim_exit: toolbar handles button state, we just ensure status updates
