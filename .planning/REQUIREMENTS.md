@@ -20,8 +20,8 @@
 ### GPIO
 
 - [x] **GPIO-01**: Simulator supports GPIO peripheral — set pins high/low, read input state
-- [ ] **GPIO-02**: Virtual LEDs light up in the UI when corresponding GPIO pins are set high
-- [ ] **GPIO-03**: Pin state table shows all GPIO pins with current direction and state (high/low)
+- [x] **GPIO-02**: Virtual LEDs light up in the UI when corresponding GPIO pins are set high
+- [x] **GPIO-03**: Pin state table shows all GPIO pins with current direction and state (high/low)
 - [x] **GPIO-04**: User can click virtual buttons in the UI to send input signals to the running firmware
 
 ### UART
@@ -37,9 +37,9 @@
 
 ### Controls
 
-- [ ] **CTRL-01**: User can start and stop firmware execution with run/stop controls
-- [ ] **CTRL-02**: Simulation status indicator shows current state (running/stopped/error)
-- [ ] **CTRL-03**: User can adjust simulation speed (slow-mo / normal / fast-forward)
+- [x] **CTRL-01**: User can start and stop firmware execution with run/stop controls
+- [x] **CTRL-02**: Simulation status indicator shows current state (running/stopped/error)
+- [x] **CTRL-03**: User can adjust simulation speed (slow-mo / normal / fast-forward)
 
 ## v2 Requirements
 
@@ -85,17 +85,17 @@
 | EDIT-02 | Phase 2 | Complete (02-02) |
 | EDIT-03 | Phase 2 | Complete (02-02) |
 | GPIO-01 | Phase 2 | Complete |
-| GPIO-02 | Phase 2 | Pending |
-| GPIO-03 | Phase 2 | Pending |
+| GPIO-02 | Phase 2 | Complete |
+| GPIO-03 | Phase 2 | Complete |
 | GPIO-04 | Phase 2 | Complete |
 | UART-01 | Phase 3 | Pending |
 | UART-02 | Phase 3 | Pending |
 | UART-03 | Phase 3 | Pending |
 | SPII-01 | Phase 3 | Pending |
 | SPII-02 | Phase 3 | Pending |
-| CTRL-01 | Phase 2 | Pending |
-| CTRL-02 | Phase 2 | Pending |
-| CTRL-03 | Phase 2 | Pending |
+| CTRL-01 | Phase 2 | Complete |
+| CTRL-02 | Phase 2 | Complete |
+| CTRL-03 | Phase 2 | Complete |
 
 **Coverage:**
 - v1 requirements: 18 total
