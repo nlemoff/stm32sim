@@ -27,11 +27,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. A compiled "blink LED" sample runs as a subprocess and emits a stream of GPIO state-change JSON events to stdout, captured by the execution runner
   3. A WebSocket client can connect and receive real-time peripheral state deltas as the simulation runs (verified with a CLI WebSocket tool, no browser needed)
   4. Simulation subprocesses are terminated after a configurable timeout and when the client disconnects (no orphaned processes)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md — Bootstrap project, mock HAL stub library, and sample firmware programs
+- [ ] 01-02-PLAN.md — Compiler module with error parsing and execution runner with subprocess management
+- [ ] 01-03-PLAN.md — HTTP server with REST API endpoints and WebSocket event streaming
 
 ### Phase 2: Frontend and GPIO End-to-End
 **Goal**: Users can write STM32 C code in a browser editor, compile it, run it, and see GPIO behavior visualized through LEDs, a pin state table, and virtual input buttons -- the complete write-compile-run-see loop
@@ -70,6 +71,6 @@ Phases execute in numeric order: 1 → 2 → 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Compilation and Simulation Engine | 0/0 | Not started | - |
+| 1. Compilation and Simulation Engine | 0/3 | Planning complete | - |
 | 2. Frontend and GPIO End-to-End | 0/0 | Not started | - |
 | 3. UART and SPI/I2C Peripherals | 0/0 | Not started | - |
