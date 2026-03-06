@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-01-PLAN.md
-last_updated: "2026-03-06T01:03:04Z"
-last_activity: 2026-03-06 — Completed Plan 01-01 (HAL stubs + samples)
+stopped_at: Completed 01-02-PLAN.md
+last_updated: "2026-03-06T01:10:54Z"
+last_activity: 2026-03-06 — Completed Plan 01-02 (Compiler + Runner modules)
 progress:
   total_phases: 3
   completed_phases: 0
   total_plans: 3
-  completed_plans: 1
-  percent: 11
+  completed_plans: 2
+  percent: 67
 ---
 
 # Project State
@@ -26,28 +26,28 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 ## Current Position
 
 Phase: 1 of 3 (Compilation and Simulation Engine)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: Executing
-Last activity: 2026-03-06 — Completed Plan 01-01 (HAL stubs + samples)
+Last activity: 2026-03-06 — Completed Plan 01-02 (Compiler + Runner modules)
 
-Progress: [█░░░░░░░░░] 11%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 7min
-- Total execution time: 0.12 hours
+- Total plans completed: 2
+- Average duration: 5.5min
+- Total execution time: 0.18 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01 | 1 | 7min | 7min |
+| 01 | 2 | 11min | 5.5min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (7min)
-- Trend: first plan
+- Last 5 plans: 01-01 (7min), 01-02 (4min)
+- Trend: accelerating
 
 *Updated after each plan completion*
 
@@ -64,6 +64,10 @@ Recent decisions affecting current work:
 - [01-01]: Used __attribute__((constructor/destructor)) in sim_main.c so user code keeps normal main()
 - [01-01]: GPIO events emit individual pin numbers decoded from bitmask, port letters A-E for readability
 - [01-01]: SIM_SPEED env var controls simulation speed multiplier at launch time
+- [01-02]: process.cwd() for HAL path resolution (reliable across test/production contexts)
+- [01-02]: globSync for HAL source discovery (auto-adapts when new stubs are added)
+- [01-02]: Async generator pattern for stdout streaming (composable, backpressure-aware)
+- [01-02]: Dual cleanup in stopSimulation + proc.exited handler (race condition safety)
 
 ### Pending Todos
 
@@ -77,6 +81,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-06T01:03:04Z
-Stopped at: Completed 01-01-PLAN.md
-Resume file: .planning/phases/01-compilation-and-simulation-engine/01-01-SUMMARY.md
+Last session: 2026-03-06T01:10:54Z
+Stopped at: Completed 01-02-PLAN.md
+Resume file: .planning/phases/01-compilation-and-simulation-engine/01-02-SUMMARY.md
