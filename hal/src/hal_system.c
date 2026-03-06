@@ -47,6 +47,11 @@ void HAL_Delay(uint32_t Delay) {
         "{\"requested_ms\":%u,\"actual_ms\":%u}",
         Delay, actual_ms);
 
+    /* Ensure minimum 1ms sleep to prevent CPU spinning at very high speeds */
+    if (actual_ms == 0 && Delay > 0) {
+        actual_ms = 1;
+    }
+
     /* Sleep in 10ms increments, checking stdin each iteration
        so that GPIO input is processed even during long delays */
     uint32_t remaining_ms = actual_ms;

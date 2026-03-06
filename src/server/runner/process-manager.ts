@@ -42,6 +42,7 @@ export async function startSimulation(options: StartOptions): Promise<string> {
   const id = crypto.randomUUID();
 
   const proc = Bun.spawn([binaryPath], {
+    stdin: "pipe",
     stdout: "pipe",
     stderr: "pipe",
     env: {
@@ -114,6 +115,15 @@ export function stopSimulation(id: string): boolean {
   const sim = simulationStore.get(id);
   if (!sim) return false;
 
+  // Close stdin pipe before killing to avoid write errors
+  try {
+    if (sim.process.stdin) {
+      (sim.process.stdin as any).end();
+    }
+  } catch {
+    // Ignore errors -- process may already be exiting
+  }
+
   // Kill the process
   sim.process.kill();
 
@@ -143,5 +153,39 @@ export function getSimulation(id: string): SimulationState | undefined {
 export function stopAllSimulations(): void {
   for (const [id] of simulationStore) {
     stopSimulation(id);
+  }
+}
+
+/**
+ * Send a GPIO input command to a running simulation's stdin.
+ *
+ * Writes a JSON line to the subprocess stdin pipe, which the C runtime
+ * reads via sim_check_stdin() to update the GPIO IDR register.
+ *
+ * @param simId - Simulation ID
+ * @param port - GPIO port letter (A-E)
+ * @param pin - GPIO pin number (0-15)
+ * @param state - Pin state (0 or 1)
+ */
+export function sendGpioInput(
+  simId: string,
+  port: string,
+  pin: number,
+  state: number,
+): void {
+  const sim = simulationStore.get(simId);
+  if (!sim) return;
+
+  try {
+    const json =
+      JSON.stringify({ type: "gpio_input", port, pin, state }) + "\n";
+    // Bun's subprocess stdin is a FileSink with direct write/flush methods
+    const stdin = sim.process.stdin as any;
+    if (stdin) {
+      stdin.write(json);
+      stdin.flush();
+    }
+  } catch {
+    // Process may have already exited -- ignore write errors
   }
 }

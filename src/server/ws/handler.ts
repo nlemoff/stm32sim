@@ -8,7 +8,11 @@
  * process is killed to avoid orphaned subprocesses.
  */
 import type { ServerWebSocket } from "bun";
-import { stopSimulation, getSimulation } from "../runner/process-manager";
+import {
+  stopSimulation,
+  getSimulation,
+  sendGpioInput,
+} from "../runner/process-manager";
 
 /**
  * Data attached to each WebSocket connection.
@@ -60,7 +64,7 @@ export const wsHandlers = {
 
   /**
    * Called when a message is received from a WebSocket client.
-   * Currently only logs gpio_input messages (reserved for Phase 2 button support).
+   * Forwards validated gpio_input messages to the simulation subprocess stdin.
    */
   message(ws: ServerWebSocket<WsData>, message: string | Buffer) {
     try {
@@ -70,8 +74,20 @@ export const wsHandlers = {
           : JSON.parse(message.toString());
 
       if (msg.type === "gpio_input") {
-        // Reserved for Phase 2 button support -- log and ignore for now
-        // console.log(`GPIO input for sim ${ws.data.simulationId}:`, msg);
+        // Validate port: must be a single letter A-E
+        const port = String(msg.port);
+        if (!/^[A-E]$/.test(port)) return;
+
+        // Validate pin: must be an integer 0-15
+        const pin = Number(msg.pin);
+        if (!Number.isInteger(pin) || pin < 0 || pin > 15) return;
+
+        // Validate state: must be 0 or 1
+        const state = Number(msg.state);
+        if (state !== 0 && state !== 1) return;
+
+        // Forward to subprocess stdin
+        sendGpioInput(ws.data.simulationId, port, pin, state);
       }
     } catch {
       // Ignore invalid messages
