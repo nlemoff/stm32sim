@@ -84,12 +84,11 @@ export class SimConnection {
   }
 
   /**
-   * Close the WebSocket connection and clear all handlers.
+   * Close the WebSocket connection. Event handlers registered via on()
+   * and onClose() are preserved for subsequent connections.
    */
   disconnect(): void {
     this.ws?.close();
     this.ws = null;
-    this.handlers.clear();
-    this.closeHandlers = [];
   }
 }
