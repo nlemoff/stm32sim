@@ -27,13 +27,13 @@
 ### UART
 
 - [x] **UART-01**: Simulator supports UART transmit — firmware serial output captured
-- [ ] **UART-02**: UART output displayed in an xterm.js terminal console in the UI
+- [x] **UART-02**: UART output displayed in an xterm.js terminal console in the UI
 - [x] **UART-03**: User can type into the UART console and firmware receives the input (bidirectional)
 
 ### SPI/I2C
 
 - [x] **SPII-01**: Simulator supports SPI/I2C loopback — data sent is echoed back and displayed
-- [ ] **SPII-02**: Timestamped bus log shows all SPI/I2C transactions
+- [x] **SPII-02**: Timestamped bus log shows all SPI/I2C transactions
 
 ### Controls
 
@@ -89,10 +89,10 @@
 | GPIO-03 | Phase 2 | Complete |
 | GPIO-04 | Phase 2 | Complete |
 | UART-01 | Phase 3 | Complete |
-| UART-02 | Phase 3 | Pending |
+| UART-02 | Phase 3 | Complete |
 | UART-03 | Phase 3 | Complete |
 | SPII-01 | Phase 3 | Complete |
-| SPII-02 | Phase 3 | Pending |
+| SPII-02 | Phase 3 | Complete |
 | CTRL-01 | Phase 2 | Complete |
 | CTRL-02 | Phase 2 | Complete |
 | CTRL-03 | Phase 2 | Complete |
