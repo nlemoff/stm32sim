@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 02-04-PLAN.md
-last_updated: "2026-03-06T06:16:17Z"
-last_activity: 2026-03-06 — Completed Plan 02-04 (Human Verification Checkpoint)
+stopped_at: Completed 02-05-PLAN.md
+last_updated: "2026-03-06T06:31:33.474Z"
+last_activity: 2026-03-06 — Completed Plan 02-05 (Fix SimConnection Handler Persistence)
 progress:
   total_phases: 3
   completed_phases: 2
-  total_plans: 7
-  completed_plans: 7
+  total_plans: 8
+  completed_plans: 8
   percent: 100
 ---
 
@@ -26,34 +26,35 @@ See: .planning/PROJECT.md (updated 2026-03-05)
 ## Current Position
 
 Phase: 2 of 3 (Frontend and GPIO End-to-End) -- COMPLETE
-Plan: 4 of 4 in current phase (all complete)
+Plan: 5 of 5 in current phase (all complete)
 Status: Executing
-Last activity: 2026-03-06 — Completed Plan 02-04 (Human Verification Checkpoint)
+Last activity: 2026-03-06 — Completed Plan 02-05 (Fix SimConnection Handler Persistence)
 
 Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 7
-- Average duration: 5.1min
-- Total execution time: 0.60 hours
+- Total plans completed: 8
+- Average duration: 4.6min
+- Total execution time: 0.62 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
 | 01 | 3 | 16min | 5.3min |
-| 02 | 4 | 20min | 5.0min |
+| 02 | 5 | 21min | 4.2min |
 
 **Recent Trend:**
-- Last 5 plans: 01-03 (5min), 02-01 (5min), 02-02 (11min), 02-03 (3min), 02-04 (1min)
+- Last 5 plans: 02-01 (5min), 02-02 (11min), 02-03 (3min), 02-04 (1min), 02-05 (1min)
 - Trend: stable
 
 *Updated after each plan completion*
 | Phase 02 P01 | 14min | 2 tasks | 7 files |
 | Phase 02 P03 | 3min | 2 tasks | 8 files |
 | Phase 02 P04 | 1min | 1 tasks | 0 files |
+| Phase 02 P05 | 1min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -87,6 +88,7 @@ Recent decisions affecting current work:
 - [02-03]: Clear-on-run pattern: all GPIO viz state reset before each new simulation (Pitfall 2)
 - [02-03]: Touch events on virtual buttons for mobile support alongside mouse events
 - [02-04]: All 7 human verification test groups passed -- Phase 2 browser UI confirmed working end-to-end
+- [02-05]: Minimal fix: remove handler clearing from disconnect() rather than re-registering handlers on each connect
 
 ### Pending Todos
 
@@ -100,6 +102,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-06T06:16:17Z
-Stopped at: Completed 02-04-PLAN.md (Phase 2 complete)
+Last session: 2026-03-06T06:31:33.472Z
+Stopped at: Completed 02-05-PLAN.md
 Resume file: None
