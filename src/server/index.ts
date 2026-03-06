@@ -6,6 +6,7 @@
  * running simulations, and listing sample programs. WebSocket support
  * enables real-time streaming of GPIO events from running simulations.
  */
+import { join } from "path";
 import { handleCompile, withCors } from "./routes/compile";
 import { handleRun } from "./routes/run";
 import { handleStop } from "./routes/stop";
@@ -13,12 +14,14 @@ import { handleListSamples, handleGetSample } from "./routes/samples";
 import { wsHandlers, type WsData } from "./ws/handler";
 import { stopAllSimulations } from "./runner/process-manager";
 
+const STATIC_DIR = join(process.cwd(), "dist");
+
 const port = parseInt(process.env.PORT || "3000", 10);
 
 const server = Bun.serve<WsData>({
   port,
 
-  fetch(req, server) {
+  async fetch(req, server) {
     const url = new URL(req.url);
     const { pathname } = url;
 
@@ -76,6 +79,14 @@ const server = Bun.serve<WsData>({
       if (name && !name.includes("/")) {
         return handleGetSample(name);
       }
+    }
+
+    // Serve frontend static files from dist/
+    const staticPath = pathname === "/" ? "index.html" : pathname.slice(1);
+    const filePath = join(STATIC_DIR, staticPath);
+    const file = Bun.file(filePath);
+    if (await file.exists()) {
+      return withCors(new Response(file));
     }
 
     // Not found
