@@ -207,11 +207,20 @@ input[type="text"] {
 }
 
 .pin-high {
-  color: var(--led-on);
+  color: #4caf50;
+  font-weight: bold;
 }
 
 .pin-low {
   color: #666;
+}
+
+.dir-in {
+  color: #ff9800;
+}
+
+.dir-out {
+  color: #2196f3;
 }
 
 /* Virtual buttons */

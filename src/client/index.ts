@@ -1,26 +1,87 @@
 /**
  * @module client/index
  * @description Application bootstrap.
- * Initializes the CodeMirror editor, loads samples into the dropdown,
- * and sets up file upload. Exports key modules for Plan 03.
+ * Initializes all modules: editor, API client, WebSocket, GPIO visualization,
+ * simulation controls, and error panel. Wires everything together for the
+ * full write-compile-run-see loop.
  */
 import { initEditor, getCode, setCode, setupFileUpload } from "./editor/editor";
-import { listSamples, getSample } from "./sim/api";
+import { compile, run, stop, listSamples, getSample } from "./sim/api";
 import { SimConnection } from "./sim/websocket";
 import { getStatus, setStatus, onStatusChange } from "./sim/state";
+import { GpioState } from "./gpio/gpio-state";
+import { initLedPanel, updateLed, clearLeds } from "./gpio/led-panel";
+import { initPinTable, updatePinTable, clearPinTable } from "./gpio/pin-table";
+import { initButtonPanel, addButton, clearButtons } from "./gpio/button-panel";
+import { initToolbar } from "./controls/toolbar";
+import { initErrorPanel } from "./controls/error-panel";
 
-// Initialize editor
+// --- Initialize editor ---
 const editorContainer = document.getElementById("editor-container")!;
-const editorView = initEditor(editorContainer);
+initEditor(editorContainer);
 
 // Set up file upload
 const fileInput = document.getElementById("file-upload") as HTMLInputElement;
 setupFileUpload(fileInput);
 
-// Create shared SimConnection instance
-const simConnection = new SimConnection();
+// --- Create shared instances ---
+const conn = new SimConnection();
+const gpioState = new GpioState();
 
-// Load samples into dropdown
+// --- Initialize GPIO panels ---
+initLedPanel(document.getElementById("led-panel")!);
+initPinTable(document.getElementById("pin-table")!);
+initButtonPanel(
+  document.getElementById("button-panel")!,
+  (port, pin, state) => conn.sendGpioInput(port, pin, state)
+);
+
+// --- Initialize error panel ---
+initErrorPanel(document.getElementById("error-panel")!);
+
+// --- Initialize toolbar ---
+initToolbar({
+  getCode,
+  compile,
+  run,
+  stop,
+  setStatus,
+  getStatus,
+  onStatusChange,
+  conn,
+  gpioState,
+});
+
+// --- Register WebSocket event handlers ---
+
+// gpio_init: create pin state entries, update table, auto-add buttons for input pins
+conn.on("gpio_init", (event) => {
+  const data = event.data as { port: string; pins: number[]; mode: string };
+  gpioState.handleGpioInit(data);
+  updatePinTable(gpioState.getAllPins());
+
+  // Auto-add virtual buttons for input pins
+  if (data.mode === "input") {
+    for (const pin of data.pins) {
+      addButton(data.port, pin);
+    }
+  }
+});
+
+// gpio_write: update state, LED, and pin table
+conn.on("gpio_write", (event) => {
+  const data = event.data as { port: string; pin: number; state: number };
+  gpioState.handleGpioWrite(data);
+  updateLed(data.port, data.pin, data.state);
+  updatePinTable(gpioState.getAllPins());
+});
+
+// sim_exit: toolbar handles button state, we just ensure status updates
+conn.on("sim_exit", () => {
+  setStatus("stopped");
+});
+
+// --- Load samples into dropdown ---
 const sampleSelect = document.getElementById("sample-select") as HTMLSelectElement;
 
 async function loadSamples() {
@@ -53,8 +114,4 @@ sampleSelect.addEventListener("change", async () => {
   }
 });
 
-// Initialize on DOM ready
 loadSamples();
-
-// Export for Plan 03 (GPIO visualization, controls)
-export { editorView, getCode, setCode, simConnection, getStatus, setStatus, onStatusChange };
