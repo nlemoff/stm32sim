@@ -13,7 +13,7 @@ Three phases that build bottom-up: a backend pipeline that compiles and executes
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Compilation and Simulation Engine** - Backend pipeline: Mock HAL stubs, server-side compilation, execution runner, state manager, and WebSocket broadcasting
-- [ ] **Phase 2: Frontend and GPIO End-to-End** - Browser UI with code editor, GPIO visualization (LEDs, pin table, virtual buttons), simulation controls, and sample projects
+- [x] **Phase 2: Frontend and GPIO End-to-End** - Browser UI with code editor, GPIO visualization (LEDs, pin table, virtual buttons), simulation controls, and sample projects
 - [ ] **Phase 3: UART and SPI/I2C Peripherals** - UART serial console with bidirectional I/O and SPI/I2C loopback with transaction logging
 
 ## Phase Details
@@ -49,8 +49,8 @@ Plans:
 Plans:
 - [x] 02-01-PLAN.md — Backend GPIO input IPC: stdin reader in C runtime, stdin pipe in process-manager, WebSocket forwarding
 - [x] 02-02-PLAN.md — Frontend scaffold: CodeMirror editor, file upload, sample loading, API/WebSocket clients, static serving
-- [ ] 02-03-PLAN.md — GPIO visualization (LEDs, pin table, buttons), simulation controls (run/stop/speed/status), error panel, full wiring
-- [ ] 02-04-PLAN.md — Human verification checkpoint: complete browser UI end-to-end testing
+- [x] 02-03-PLAN.md — GPIO visualization (LEDs, pin table, buttons), simulation controls (run/stop/speed/status), error panel, full wiring
+- [x] 02-04-PLAN.md — Human verification checkpoint: complete browser UI end-to-end testing
 
 ### Phase 3: UART and SPI/I2C Peripherals
 **Goal**: Users can observe UART serial output in a terminal console, send input to the firmware via the console, and see SPI/I2C loopback transactions logged -- completing the v1 peripheral suite
@@ -74,5 +74,5 @@ Phases execute in numeric order: 1 → 2 → 3
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Compilation and Simulation Engine | 3/3 | Complete | 2026-03-06 |
-| 2. Frontend and GPIO End-to-End | 2/4 | In Progress | - |
+| 2. Frontend and GPIO End-to-End | 4/4 | Complete | 2026-03-06 |
 | 3. UART and SPI/I2C Peripherals | 0/0 | Not started | - |
